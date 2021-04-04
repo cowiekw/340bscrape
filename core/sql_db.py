@@ -24,6 +24,9 @@ class SQLPipeline:
 
     def create_table(self):
         db = self.conn.cursor()
+
+        # PRAGMA FOREIGN KEYS
+
         db.execute("""DROP TABLE IF EXISTS entity""")
         db.execute("""CREATE TABLE entity
         (id TEXT, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(id))
@@ -31,7 +34,7 @@ class SQLPipeline:
 
         db.execute("""DROP TABLE IF EXISTS parent""")
         db.execute("""CREATE table parent
-        (id TEXT, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(id)) """)
+        (id TEXT, name TEXT UNIQUE, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(id)) """)
 
         db.execute("""DROP TABLE IF EXISTS child""")
         db.execute("""CREATE table child(child_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(child_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")

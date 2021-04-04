@@ -2,16 +2,25 @@ import time
 import os
 import sys
 import requests
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from core.entity import Entity
 
-def search_by_id(element_ids, search_terms, driver): # Find states based ON the html element id
+def search_by_id(parameters_list, element_ids, search_terms, driver):
+    for key in parameters_list:
+        search = driver.find_element_by_id(element_ids[key])
+        search.send_keys(search_terms[key])
+    search.send_keys(Keys.RETURN) # Execute the search
+
+def search_all_hospitals(element_ids, driver): # Find states based ON the html element id
+    search = driver.find_element_by_id(element_ids['class_id'])
+    search.send_keys('Hospitals')
+    search.send_keys(Keys.RETURN) # Execute the search
+
+def search_state_keyword(element_ids, search_terms, driver): # Find states based ON the html element id
     search = driver.find_element_by_id(element_ids['state_id'])
     search.send_keys(search_terms['state'])
     # time.sleep(1)

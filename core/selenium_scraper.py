@@ -5,12 +5,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from core.helpers import wait_by_id, wait_by_class, search_by_id, count_rows, count_pages, read_data
 
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 grid_id = "ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid"
-element_ids = {'state_id': 'ContentPlaceHolder1_ceSearchCtrl_lstEntityState', 'keyword_id':'ContentPlaceHolder1_ceSearchCtrl_txtKeyword'}
+element_ids = {'state': 'ContentPlaceHolder1_ceSearchCtrl_lstEntityState', 'keyword':'ContentPlaceHolder1_ceSearchCtrl_txtKeyword', 'class':'ContentPlaceHolder1_ceSearchCtrl_ddlEntityClassification'}
 
 class SeleniumScraper():
     def __init__(self):
@@ -28,14 +27,14 @@ class SeleniumScraper():
         PATH = path+chromedriver
         self.driver = webdriver.Chrome(PATH)
 
-    def scrape_all(self, search_terms):
+    def scrape_all(self, parameters, search_terms):
         entity_list = []
         driver = self.driver
         driver.get(url)
         print("Page Title: ", driver.title)
 
         # Make the search and wait for results to load
-        search_by_id(element_ids, search_terms, driver)
+        search_by_id(parameters, element_ids, search_terms, driver)
         wait_by_id(grid_id, driver)
         page_count = count_pages(driver)
 
