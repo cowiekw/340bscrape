@@ -1,5 +1,5 @@
 import sqlite3
-from entity import Entity
+from core.entity import Entity
 
 class SQLPipeline:
     """ An entity class"""
@@ -51,6 +51,7 @@ class SQLPipeline:
                 query = '''INSERT INTO entity (id, name, subname, address, city, state) VALUES(?, ?, ?, ?, ?, ?)'''
                 data = (ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
                 db.execute(query, data)
+                print(ent.name, "entity was stored in table")
             # db.execute('''INSERT INTO entities(id, name, subname, address, city, state) VALUES(?, ?, ?, ?, ?, ?)''', ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
 
     def process_entity(self, ent):

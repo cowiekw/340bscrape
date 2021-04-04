@@ -5,8 +5,8 @@
 import sys
 import requests
 from time import sleep
-from code.selenium_scraper import SeleniumScraper
-from code.sql_db import SQLPipeline
+from core.selenium_scraper import SeleniumScraper
+from core.sql_db import SQLPipeline
 
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 search_terms = {'state': all, 'keyword': ''}
@@ -31,7 +31,7 @@ try:
     SQL.store_data(entities, 'entity')
 
 except Exception as ex:
-    print(ex)
+    print("Exception:", ex)
 finally:
     SQL.save_changes()
 

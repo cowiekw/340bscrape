@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from code.entity import Entity
+from core.entity import Entity
 
 def search_by_id(element_ids, search_terms, driver): # Find states based ON the html element id
     search = driver.find_element_by_id(element_ids['state_id'])

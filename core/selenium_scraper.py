@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from code.helpers import wait_by_id, wait_by_class,search_by_id, count_rows, count_pages, read_data
+from core.helpers import wait_by_id, wait_by_class, search_by_id, count_rows, count_pages, read_data
 
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 grid_id = "ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid"
@@ -24,6 +24,7 @@ class SeleniumScraper():
             chromedriver ='/chromedriver.exe'
 
         path = os.path.dirname(os.path.abspath(__file__))
+        print("Path", path)
         PATH = path+chromedriver
         self.driver = webdriver.Chrome(PATH)
 
