@@ -29,19 +29,25 @@ class SQLPipeline:
 
         db.execute("""DROP TABLE IF EXISTS entity""")
         db.execute("""CREATE TABLE entity
-        (id TEXT, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(id))
+        (id TEXT, name TEXT, subname TEXT,
+        address TEXT, city TEXT, state TEXT, PRIMARY KEY(id))
         """) # Add Status field later
 
         db.execute("""DROP TABLE IF EXISTS parent""")
         db.execute("""CREATE table parent
-        (id TEXT, name TEXT UNIQUE, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(id)) """)
+        (id INTEGER UNIQUE NOT NULL, entity_id TEXT, name TEXT,
+        address TEXT, city TEXT, state TEXT, PRIMARY KEY(id), FOREIGN KEY(entity_id) REFERENCES entity(id))
+        """)
 
         db.execute("""DROP TABLE IF EXISTS child""")
-        db.execute("""CREATE table child(child_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(child_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
+        db.execute("""CREATE table child (id INTEGER UNIQUE NOT NULL, entity_id TEXT, parent_name TEXT, name TEXT,
+        address TEXT, city TEXT, state TEXT, PRIMARY KEY(id), FOREIGN KEY(entity_id) REFERENCES entity(id), FOREIGN KEY(name) REFERENCES parent(name))""") # 
+        # db.execute("""CREATE table child (child_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(child_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
 
         db.execute("""DROP TABLE IF EXISTS contract""")
         db.execute("""CREATE table contract
-        (contract_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(contract_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
+        (contract_id TEXT,  name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(contract_id))""")
+        # (contract_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(contract_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
 
     def save_changes(self):
         self.conn.commit()
@@ -49,13 +55,24 @@ class SQLPipeline:
 
     def store_data(self, entities_list, table_name):
         db = self.conn.cursor()
-        if table_name == 'entity':
+        if table_name == 'entity' or table_name == 'entities':
             for ent in entities_list:
                 query = '''INSERT INTO entity (id, name, subname, address, city, state) VALUES(?, ?, ?, ?, ?, ?)'''
                 data = (ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
                 db.execute(query, data)
                 print(ent.name, "entity was stored in table")
-            # db.execute('''INSERT INTO entities(id, name, subname, address, city, state) VALUES(?, ?, ?, ?, ?, ?)''', ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
+
+        elif (table_name == 'parent') or (table_name == 'parents'):
+            for ent in entities_list:
+                query = '''INSERT INTO parent (entity_id, name, address, city, state) VALUES(?, ?, ?, ?, ?)'''
+                data = (ent.id, ent.name, ent.address, ent.city, ent.state)
+                db.execute(query, data)
+
+        elif table_name == 'child' or table_name == 'children':
+            for ent in entities_list:
+                query = '''INSERT INTO child (entity_id, parent_name, name, address, city, state) VALUES(?, ?, ?, ?, ?, ?)'''
+                data = (ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
+                db.execute(query, data)
 
     def process_entity(self, ent):
         self.store_db(entity)
