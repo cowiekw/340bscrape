@@ -25,7 +25,7 @@ Defines the custom class "Entity". An entity has the following attributes:
 * State
 
 ### helpers.py
-Defines functions used to scrape data and interact with the website.
+Defines functions used to interact with the HRSA website and scrape data.
 
 *search_by_id (parameters_list, element_ids, search_terms, driver)*
 *  parameters_list:
@@ -46,14 +46,13 @@ Defines functions used to scrape data and interact with the website.
  * saves the data as an entity object and adds to a list of all entities
 
 ### selenium_scraper.py
-*scrape_all(self, parameters, search_terms)*
+*scrape_all (self, parameters, search_terms)*
 * opens the url
-* creates empty lists of entities
 * searches entities based on parameters provided
-* waits for contents to load and counts number of pages
+* waits for content to load and counts number of pages
 * For each page..
   * waits for tabular data to load
-  * reads the data
+  * reads the data into a list
 
 *split_data(self, entity_list, parent_list, child_list)*
 * entity_list: contains all the scraped entities
@@ -67,5 +66,4 @@ Defines functions used to scrape data and interact with the website.
 *store_data(self, entities_list, table_name)*
 * Takes as input a list of entity objects and inserts each entity into the specified table.
 
-
-<p> Notes: Child site- A clinic, department, or outpatient facility participating in the 340b program that is affiliated with the parent hospital that <p>
+<p> Notes: Child site- A clinic, department, or outpatient facility participating in the 340b program that is affiliated with a parent hospital <p>
