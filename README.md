@@ -1,18 +1,13 @@
 # 340bscrape
 ## A program to scrape data on hospital 340b covered entities
 
-In this project, I use python, selenium webdriver, and SQlite3 to extract hospital data from a government website and store the information in a SQL database.
+In this project, I use python, selenium webdriver, and SQlite3 to extract hospital data from a government website and store the information in a database.
 
 The Health Resources and Services Adminstrations (HRSA), a department within the US government, maintains data on hospitals and their 340b status. 340b is a federal program, founded in the 1990s, that permits safety hospitals-- hospitals that serve disadvantaged populations-- to purchase drugs at a discounted price. Hospitals eligible to participate in 340b include hospitals serving a large percent of low-income patients, children's hospitals, and hospitals in rural areas, among others.
 
- The goal of the 340b program is to reduce the cost of drugs in safety net hospitals, reducing patient out-of-pocket expenses and improving the quality of care. However, the effectiveness of 340b program is debated.
+ The goal of the 340b program is to reduce the cost of drugs in safety net hospitals, reducing patient out-of-pocket expenses and improving the quality of care. However, the effectiveness of 340b program is debated. Though 340b does not cost taxpayers money, some opponents worry that the drug discounts are misused by hospitals. PhRMA, the advocacy group representing the pharmaceutical industry, [opposes](https://www.phrma.org/en/Advocacy/340B) the 340b program. AAMC, the American Associate of Medical Colleges, [supports](https://www.aamc.org/news-insights/340b) 340b.
 
- Though 340b does not cost taxpayers money, some opponents worry that the drug discounts are misused by hospitals. PhRMA, the advocacy group representing the pharmaceutical industry, [opposes](https://www.phrma.org/en/Advocacy/340B) the 340b program. AAMC, the American Associate of Medical Colleges, [supports](https://www.aamc.org/news-insights/340b) 340b.
-
-Evidence on the benefits of the 340b program paint a complicated story. Some [data](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2737308) suggests it paradoxically raises the cost of drugs.  Rapidly accessing data on hospital 340b status may enable insights into the value of consequences of this program.
-
-Here, I use selenium webdriver, a web testing tool, to navigate the HRSA website. By using python class instances, I pull relevant data for each 340b covered entity. After storing covered entity data in a list and transforming the data, I insert it into tables in a SQL database.
-
+Here, I use selenium webdriver, a web testing tool, to navigate the HRSA website.
 
 | Scraping Library | Pros | Cons |
 | -----|------| -----|

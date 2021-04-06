@@ -25,8 +25,6 @@ class SQLPipeline:
     def create_table(self):
         db = self.conn.cursor()
 
-        # PRAGMA FOREIGN KEYS
-
         db.execute("""DROP TABLE IF EXISTS entity""")
         db.execute("""CREATE TABLE entity
         (id TEXT, name TEXT, subname TEXT,
@@ -73,12 +71,5 @@ class SQLPipeline:
                 query = '''INSERT INTO child (entity_id, parent_name, name, address, city, state) VALUES(?, ?, ?, ?, ?, ?)'''
                 data = (ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
                 db.execute(query, data)
-
-    def process_entity(self, ent):
-        self.store_db(entity)
-        print("Pipeline: "+ ent.name) #print("Pipeline: "+ entity['name'][0])
-        return entity
-
-
 
 # Reference: https://github.com/casperbh96/Web-Scraping-Reddit/blob/master/scraper.py

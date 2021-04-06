@@ -67,9 +67,7 @@ def read_data(row_count, entity_list, driver):
         for key in xpaths_dict:
             try:
                 ent[key] = driver.find_element_by_xpath(xpaths_dict[key]).text
-                #print(key, "FOUND")
             except:
-                # print(key, "NOT FOUND")
                 ent[key] = None
 
         # Append each entity into a list
