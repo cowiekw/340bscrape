@@ -7,22 +7,21 @@ import requests
 from time import sleep
 from core.selenium_scraper import SeleniumScraper
 from core.sql_db import SQLPipeline
+from core.helpers import get_parameters
 
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 search_terms = {'state': all, 'keyword': '', 'class': 'Hospitals'}
 
 if not (len(sys.argv) == 2) | (len(sys.argv) == 3):
     sys.exit('Usage: scrape.py [state] ["keyword"]. To search all states: scrape.py all')
-
 search_terms['state'] = sys.argv[1] ## Define the state
 if (len(sys.argv) == 3):
     search_terms['keyword'] = sys.argv[2]
 
 # Ask user for the query parameters
-p = input("Enter parameters (state, class, and/or keyword) : ")
-parameters = ['state', 'class'] # Default parameters
-if 'keyword' in p:
-    parameters = ['state', 'class', 'keyword']
+p = input("Enter comma-separated list of parameters (state, class, and/or keyword) : ")
+parameters = get_parameters(p)
+print("Parameters", parameters)
 
 # Create empty lists to store scraped data in
 entities = []

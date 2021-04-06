@@ -19,7 +19,7 @@ class SeleniumScraper():
         self.xpaths = {}
 
     def setup_chrome_browser(self):
-        if os.name == 'posix' or os.name == 'nt': # if running on a mac or windows
+        if os.name == 'posix' or os.name == 'nt': #if running on a mac or windows
             chromedriver ='/chromedriver.exe'
 
         path = os.path.dirname(os.path.abspath(__file__))
