@@ -10,13 +10,24 @@ from core.sql_db import SQLPipeline
 
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 search_terms = {'state': all, 'keyword': '', 'class': 'Hospitals'}
-search_terms['state'] = 'Alaska'
-parameters = ['state', 'class']
+
+if not (len(sys.argv) == 2) | (len(sys.argv) == 3):
+    sys.exit('Usage: scrape.py [state] ["keyword"]. To search all states: scrape.py all')
+
+search_terms['state'] = sys.argv[1] ## Define the state
+if (len(sys.argv) == 3):
+    search_terms['keyword'] = sys.argv[2]
+
+# Ask user for the query parameters
+p = input("Enter parameters (state, class, and/or keyword) : ")
+parameters = ['state', 'class'] # Default parameters
+if 'keyword' in p:
+    parameters = ['state', 'class', 'keyword']
+
+# Create empty lists to store scraped data in
 entities = []
 parents = []
 children = []
-
-# PATH = "/Users/katecowie/Documents/Spring2021/kanterlab/340bot/chromedriver.exe"
 
 scraper = SeleniumScraper()
 scraper.setup_chrome_browser()
@@ -28,13 +39,16 @@ data_dict = scraper.split_data(entities, parents, children)
 parents = data_dict['parent']
 children = data_dict['child']
 
-# Create a SQL database with three tables
+# Set up SQL connection
 SQL = SQLPipeline()
 
 try:
     SQL.create_connection(erase_first=True)
+
+    # Create a SQL database with three tables
     SQL.create_table()
 
+    # Insert covered entity data into each table
     SQL.store_data(entities, 'entity')
     SQL.store_data(parents, 'parent')
     SQL.store_data(children, 'child')

@@ -23,7 +23,6 @@ class SeleniumScraper():
             chromedriver ='/chromedriver.exe'
 
         path = os.path.dirname(os.path.abspath(__file__))
-        print("Path", path)
         PATH = path+chromedriver
         self.driver = webdriver.Chrome(PATH)
 
@@ -45,7 +44,6 @@ class SeleniumScraper():
 
         # Flip the pages
         for i in range(1, page_count + 1):
-            print("Page: ", i)
             wait_by_class('rgAltRow', driver)
             time.sleep(1)
             try:
@@ -53,7 +51,6 @@ class SeleniumScraper():
             except:
                 print("Error with row count")
                 row_count = 25
-            print("Row count: ", row_count)
             read_data(row_count, entity_list, driver)
             next_page_element = wait_by_class('rgPageNext', driver) # Wait for the 'next page' element to load
             next_page_element.send_keys(Keys.RETURN) # Go to the next page

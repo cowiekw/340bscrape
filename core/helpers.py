@@ -19,7 +19,7 @@ def search_by_id(parameters_list, element_ids, search_terms, driver):
 def search_all_hospitals(element_ids, driver): # Find states based ON the html element id
     search = driver.find_element_by_id(element_ids['class_id'])
     search.send_keys('Hospitals')
-    search.send_keys(Keys.RETURN) # Execute the search
+    search.send_keys(Keys.RETURN)
 
 def wait_by_id(element_id, driver):  # Wait for page contents to load
     try:
@@ -32,14 +32,12 @@ def wait_by_class(element_class, driver): # Wait for page links to load
         next_page_element = driver.find_element_by_class_name(element_class)
         return next_page_element
     except StaleElementReferenceException as e:
-        print("Except")
         raise e
 
 def count_rows(driver):
     rows = driver.find_elements_by_class_name('rgRow')
     alt_rows = driver.find_elements_by_class_name('rgAltRow')
     row_count = len(rows) + len(alt_rows)
-    print("Rows, alts: ", len(rows), len(alt_rows))
     return row_count
 
 # Determine the total number of pages
@@ -63,6 +61,7 @@ def read_data(row_count, entity_list, driver):
         xpaths_dict['address'] = '//*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00__'+str(i)+'"]/td[6]'
         xpaths_dict['city'] = '//*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00__'+str(i)+'"]/td[7]'
         xpaths_dict['state'] = '//*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00__'+str(i)+'"]/td[8]'
+
         ent = {} # Make dictionary for each row data
         for key in xpaths_dict:
             try:
@@ -74,4 +73,3 @@ def read_data(row_count, entity_list, driver):
         entity = Entity(ent['id'], ent['name'], ent['sub_name'],ent['address'], ent['city'], ent['state'])
         entity_list.append(entity)
         print(i, entity)
-        # return entity_list

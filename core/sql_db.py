@@ -10,7 +10,6 @@ class SQLPipeline:
         self.create_connection()
         self.create_table()
         self.save_changes()
-        # self.store_data()
 
     def create_connection(self, erase_first=False):
         if (erase_first==True):
@@ -19,7 +18,6 @@ class SQLPipeline:
             except Exception:
                 pass
         self.conn = sqlite3.connect(('data/{0}.db').format(self.db_name))
-        # :memory:
         db  = self.conn.cursor()
 
     def create_table(self):
@@ -29,7 +27,7 @@ class SQLPipeline:
         db.execute("""CREATE TABLE entity
         (id TEXT, name TEXT, subname TEXT,
         address TEXT, city TEXT, state TEXT, PRIMARY KEY(id))
-        """) # Add Status field later
+        """)
 
         db.execute("""DROP TABLE IF EXISTS parent""")
         db.execute("""CREATE table parent
@@ -40,16 +38,10 @@ class SQLPipeline:
         db.execute("""DROP TABLE IF EXISTS child""")
         db.execute("""CREATE table child (id INTEGER UNIQUE NOT NULL, entity_id TEXT, parent_name TEXT, name TEXT,
         address TEXT, city TEXT, state TEXT, PRIMARY KEY(id), FOREIGN KEY(entity_id) REFERENCES entity(id), FOREIGN KEY(name) REFERENCES parent(name))""") #
-        # db.execute("""CREATE table child (child_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(child_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
 
         db.execute("""DROP TABLE IF EXISTS contract""")
         db.execute("""CREATE table contract
         (contract_id TEXT,  name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(contract_id))""")
-        # (contract_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(contract_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
-
-    def save_changes(self):
-        self.conn.commit()
-        self.conn.close()
 
     def store_data(self, entities_list, table_name):
         db = self.conn.cursor()
@@ -72,4 +64,7 @@ class SQLPipeline:
                 data = (ent.id, ent.name, ent.subname, ent.address, ent.city, ent.state)
                 db.execute(query, data)
 
+    def save_changes(self):
+        self.conn.commit()
+        self.conn.close()
 # Reference: https://github.com/casperbh96/Web-Scraping-Reddit/blob/master/scraper.py
