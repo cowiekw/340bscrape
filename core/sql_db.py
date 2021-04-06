@@ -41,7 +41,7 @@ class SQLPipeline:
 
         db.execute("""DROP TABLE IF EXISTS child""")
         db.execute("""CREATE table child (id INTEGER UNIQUE NOT NULL, entity_id TEXT, parent_name TEXT, name TEXT,
-        address TEXT, city TEXT, state TEXT, PRIMARY KEY(id), FOREIGN KEY(entity_id) REFERENCES entity(id), FOREIGN KEY(name) REFERENCES parent(name))""") # 
+        address TEXT, city TEXT, state TEXT, PRIMARY KEY(id), FOREIGN KEY(entity_id) REFERENCES entity(id), FOREIGN KEY(name) REFERENCES parent(name))""") #
         # db.execute("""CREATE table child (child_id TEXT, parent_id INTEGER, name TEXT, subname TEXT, address TEXT, city TEXT, state TEXT, PRIMARY KEY(child_id), FOREIGN KEY(parent_id) REFERENCES parent(id))""")
 
         db.execute("""DROP TABLE IF EXISTS contract""")

@@ -28,7 +28,7 @@ class SeleniumScraper():
         self.driver = webdriver.Chrome(PATH)
 
     def scrape_all(self, parameters, search_terms):
-        # Type can be all, parent, child, or contract
+        # Paremeters can be a combination of state, keyword, and/or class
         driver = self.driver
         driver.get(url)
         print("Page Title: ", driver.title)

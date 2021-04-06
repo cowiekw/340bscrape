@@ -21,27 +21,6 @@ def search_all_hospitals(element_ids, driver): # Find states based ON the html e
     search.send_keys('Hospitals')
     search.send_keys(Keys.RETURN) # Execute the search
 
-def search_state_keyword(element_ids, search_terms, driver): # Find states based ON the html element id
-    search = driver.find_element_by_id(element_ids['state'])
-    search.send_keys(search_terms['state'])
-    # time.sleep(1)
-    search = driver.find_element_by_id(element_ids['keyword'])
-    search.send_keys(search_terms['keyword'])
-    search.send_keys(Keys.RETURN) # Execute the search
-
-def filter_subname(element_ids, driver):
-    element = driver.find_element_by_id('ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00_ctl02_ctl02_Filter_SubName')
-    time.sleep(2)
-    element.click()
-    menu = driver.find_element_by_xpath('//*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_rfltMenu_detached"]/ul/li[14]/a/span')
-    time.sleep(2)
-    # element.send_keys(Keys.DOWN);
-    element.send_keys(Keys.RETURN)
-
-
-    # dropdown.select_by_visible_text('IsEmpty')
-    # filter_sub_id = 'ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00_ctl02_ctl02_Filter_SubName'
-
 def wait_by_id(element_id, driver):  # Wait for page contents to load
     try:
         your_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, element_id)))
@@ -98,22 +77,3 @@ def read_data(row_count, entity_list, driver):
         entity_list.append(entity)
         print(i, entity)
         # return entity_list
-
-# Selector: #ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_rfltMenu_detached > ul > li:nth-child(14) > a
-# element: <span class="rmText">IsEmpty</span>
-# //*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_rfltMenu_detached"]/ul/li[14]/a/span
-
-# ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_rfltMenu_detached
-# //*[@id="ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00_ctl02_ctl02_Filter_State"]
-
-# attribute
-# $find("ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid")._showFilterMenu("ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00", "State", event);
-# return false;WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("ctl00$ContentPlaceHolder1$CoveredEntitySearchGrid$ctl00$ctl02$ctl02$Filter_State", "", true, "", "", false, true))
-
-#
-# WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions("ctl00$ContentPlaceHolder1$CoveredEntitySearchGrid$ctl00$ctl02$ctl02$Filter_State",
-#  "", true, "", "", false, true))
-#
-#  Filter_State", "", true, "", "", false, true))"
-#  Filter_State", "", true, "", "", false, true))"
-#  ._showFilterMenu("ctl00_ContentPlaceHolder1_CoveredEntitySearchGrid_ctl00", "State", event
