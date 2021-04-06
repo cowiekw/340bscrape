@@ -12,13 +12,14 @@ from core.helpers import get_parameters
 url = "https://340bopais.hrsa.gov/coveredentitysearch"
 search_terms = {'state': all, 'keyword': '', 'class': 'Hospitals'}
 
+# Read the command line arguement to define state and keyword
 if not (len(sys.argv) == 2) | (len(sys.argv) == 3):
     sys.exit('Usage: scrape.py [state] ["keyword"]. To search all states: scrape.py all')
 search_terms['state'] = sys.argv[1] ## Define the state
 if (len(sys.argv) == 3):
     search_terms['keyword'] = sys.argv[2]
 
-# Ask user for the query parameters
+# Ask the user for the search parameters
 p = input("Enter comma-separated list of parameters (state, class, and/or keyword) : ")
 parameters = get_parameters(p)
 print("Parameters", parameters)
