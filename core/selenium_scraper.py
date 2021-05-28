@@ -20,7 +20,7 @@ class SeleniumScraper():
 
     def setup_chrome_browser(self):
         if os.name == 'posix' or os.name == 'nt': #if running on a mac or windows
-            chromedriver ='/chromedriver.exe'
+            chromedriver ='/chromedriver'
 
         path = os.path.dirname(os.path.abspath(__file__))
         PATH = path+chromedriver

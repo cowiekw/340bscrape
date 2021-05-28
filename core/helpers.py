@@ -73,14 +73,3 @@ def read_data(row_count, entity_list, driver):
         entity = Entity(ent['id'], ent['name'], ent['sub_name'],ent['address'], ent['city'], ent['state'])
         entity_list.append(entity)
         print(i, entity)
-
-def get_parameters(p):
-    if ('state' in p) and ('class' in p) and ('keyword' in p):
-        parameters = ['state', 'class', 'keyword']
-    elif ('state' in p) and ('class' in p):
-        parameters = ['state', 'class'] # Default parameters
-    elif ('state' in p) and ('keyword' in p):
-        parameters = ['state', 'keyword'] # Default parameters
-    elif ('class' in p) and ('keyword' in p):
-        parameters = ['class', 'keyword'] # Default parameters
-    return parameters
