@@ -1,5 +1,5 @@
-# Objective: Creat a both to search and extract data from the HRSA 340b covered entities page
-# Date Updated: 04/03/2021
+# Objective: Creat a bot to search and extract data from the HRSA 340b covered entities page
+# Date Updated: 05/28/2021
 
 # Import packages for web scraping
 import sys
@@ -35,7 +35,7 @@ try:
     SQL.create_connection(erase_first=True)
 
     # Create a SQL database with three tables
-    SQL.create_table()
+    # SQL.create_table()
 
     # Insert covered entity data into each table
     SQL.store_data(entities, 'entity')

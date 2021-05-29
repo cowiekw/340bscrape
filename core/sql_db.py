@@ -1,4 +1,5 @@
 import sqlite3
+import os
 from core.entity import Entity
 
 class SQLPipeline:
@@ -7,22 +8,22 @@ class SQLPipeline:
         self.conn = None
         self.db_name = name
         self.last_post_id = 0
-        self.create_connection()
-        self.create_table()
-        self.save_changes()
 
     def create_connection(self, erase_first=False):
-        if (erase_first==True):
+        if(erase_first):
             try:
                 os.remove(('{0}.db').format(self.db_name))
-            except Exception:
+                print("database was removed")
+            except Exception as ex:
+                print("database was not removed: ", ex)
                 pass
+
+        print("normal SQL connection created")
         self.conn = sqlite3.connect(('data/{0}.db').format(self.db_name))
         db  = self.conn.cursor()
 
     def create_table(self):
         db = self.conn.cursor()
-
         db.execute("""DROP TABLE IF EXISTS entity""")
         db.execute("""CREATE TABLE entity
         (id TEXT, name TEXT, subname TEXT,
